@@ -7,7 +7,9 @@ int main(){
     Tcp server(5000);
     server.TcpServer();
     server.Listen();
-    server.sendMessageC();
+    cout << "Metni Giriniz:" << endl;
+    cin >> server.plainText;
+    server.sendMessageServer();
     server.receiveMessage();
 
 }

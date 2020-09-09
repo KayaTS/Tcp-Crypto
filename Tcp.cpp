@@ -39,23 +39,18 @@ using namespace std;
             cout<<"Baglandi\n\n";
     }
 
-    void Tcp::sendMessageS(){
+    void Tcp::sendMessageClient(){
         unsigned char chipherText[50];
-        unsigned char key[16] = {0x02, 0x05, 0x10, 0x85, 0x02, 0x05, 0x10, 0x85, 0x02, 0x05, 0x10, 0x8, 0x02, 0x05, 0x10, 0x85};
         AES_set_encrypt_key(key, 128, &m_enc);
-        cout<<"Metni giriniz:" << endl;
-        cin >> plainText; 
         AES_encrypt(plainText, chipherText, &m_enc);
         int mesaj_yazildi = write(sockfd, chipherText, sizeof(chipherText));
         cout<<"log send message lend : \n" << mesaj_yazildi  <<endl;
         if(mesaj_yazildi<0)
             cout<<"MESAJ YAZILAMADI";
     }
-    void Tcp::sendMessageC(){
+    void Tcp::sendMessageServer(){
         unsigned char chipherText[50];
-        unsigned char key[16] = {0x02, 0x05, 0x10, 0x85, 0x02, 0x05, 0x10, 0x85, 0x02, 0x05, 0x10, 0x8, 0x02, 0x05, 0x10, 0x85};
         AES_set_encrypt_key(key, 128, &m_enc);
-        cout<<"Metni giriniz:" << endl;
         AES_encrypt(plainText, chipherText, &m_enc);
         int mesaj_yazildi = write(clifd, chipherText, sizeof(chipherText));
         cout<<"log send message lend : \n" << mesaj_yazildi  <<endl;
@@ -66,8 +61,6 @@ using namespace std;
     void Tcp::receiveMessage(){
         unsigned char metin[1024]="\n";
         unsigned char metin2[1024];
-        unsigned char key[16] = {0x02, 0x05, 0x10, 0x85, 0x02, 0x05, 0x10, 0x85, 0x02, 0x05, 0x10, 0x8, 0x02, 0x05, 0x10, 0x85};
-        AES_KEY m_enc;
         AES_set_decrypt_key(key, 128, &m_enc);
         int mesaj_okundu=read(sockfd,metin,1024);
         AES_decrypt(metin, metin2, &m_enc);  
