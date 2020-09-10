@@ -1,15 +1,14 @@
 #include <iostream>
 #include "Tcp.hpp"
-
+#define Clifd 0
 using namespace std;
 
 int main(){
     Tcp server(5000);
-    server.TcpServer();
+    server.tcpServer();
     server.Listen();
     cout << "Metni Giriniz:" << endl;
     cin >> server.plainText;
-    server.sendMessageServer();
-    server.receiveMessage();
-
+    server.sendMessage(server.GetFd(Clifd));
+    server.receiveMessage(server.GetFd(Clifd));
 }

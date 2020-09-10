@@ -20,10 +20,10 @@ class Tcp{
     public:
         unsigned char plainText[50];
         Tcp(int portnumber);
-        void TcpServer();
+        void tcpServer();
         void connection();
         void Listen();
-        void sendMessageClient();
-        void sendMessageServer();
-        void receiveMessage();
+        int GetFd(bool defination);//Server icin sockfd, client icin clifd dondurur.
+        void sendMessage(int fd);
+        void receiveMessage(int fd);
 };

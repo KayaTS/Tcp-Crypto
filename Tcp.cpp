@@ -13,7 +13,7 @@ using namespace std;
 	SunucuBilgileri.sin_port = htons(port);
     };
 
-    void Tcp::TcpServer(){
+    void Tcp::tcpServer(){
 	int kontrol=bind(sockfd,(struct sockaddr *)&SunucuBilgileri,sizeof(SunucuBilgileri));
 	if(kontrol<0)
 	cout<<"IP ADRES KONTROL ET"  ; 
@@ -39,30 +39,26 @@ using namespace std;
             cout<<"Baglandi\n\n";
     }
 
-    void Tcp::sendMessageClient(){
-        unsigned char chipherText[50];
-        AES_set_encrypt_key(key, 128, &m_enc);
-        AES_encrypt(plainText, chipherText, &m_enc);
-        int mesaj_yazildi = write(sockfd, chipherText, sizeof(chipherText));
-        cout<<"log send message lend : \n" << mesaj_yazildi  <<endl;
-        if(mesaj_yazildi<0)
-            cout<<"MESAJ YAZILAMADI";
-    }
-    void Tcp::sendMessageServer(){
-        unsigned char chipherText[50];
-        AES_set_encrypt_key(key, 128, &m_enc);
-        AES_encrypt(plainText, chipherText, &m_enc);
-        int mesaj_yazildi = write(clifd, chipherText, sizeof(chipherText));
-        cout<<"log send message lend : \n" << mesaj_yazildi  <<endl;
-        if(mesaj_yazildi<0)
-            cout<<"MESAJ YAZILAMADI";
+    int Tcp::GetFd(bool defination){ // Server icin 1 gir, client icin 0
+        if(defination == true)
+            return sockfd;
+        return clifd;
     }
 
-    void Tcp::receiveMessage(){
+    void Tcp::sendMessage(int fd){//Mesaji gonderen server icin clifd, client icin sockfd
+        unsigned char chipherText[50];
+        AES_set_encrypt_key(key, 128, &m_enc);
+        AES_encrypt(plainText, chipherText, &m_enc);
+        int mesaj_yazildi = write(fd, chipherText, sizeof(chipherText));
+        cout<<"log send message lend : \n" << mesaj_yazildi  <<endl;
+        if(mesaj_yazildi<0)
+            cout<<"MESAJ YAZILAMADI";
+    }
+    void Tcp::receiveMessage(int fd){//Mesaji alan server icin clifd, client icin sockfd
         unsigned char metin[1024]="\n";
         unsigned char metin2[1024];
         AES_set_decrypt_key(key, 128, &m_enc);
-        int mesaj_okundu=read(sockfd,metin,1024);
+        int mesaj_okundu=read(fd,metin,1024);
         AES_decrypt(metin, metin2, &m_enc);  
         if(mesaj_okundu<0)
             cout<<"MESAJ OKUNAMADI";

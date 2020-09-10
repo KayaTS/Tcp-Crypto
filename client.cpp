@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Tcp.hpp"
-
+#define Sockfd 1
 using namespace std;
 
 int main(){
@@ -9,8 +9,8 @@ int main(){
     Client.connection();
     cout << "Metni Giriniz:" << endl;
     cin >> Client.plainText;
-    Client.sendMessageClient();
-    Client.receiveMessage();
+    Client.sendMessage(Client.GetFd(Sockfd));
+    Client.receiveMessage(Client.GetFd(Sockfd));
     
 }
 
