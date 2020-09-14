@@ -1,6 +1,9 @@
 #include <iostream>
 #include "Tcp.hpp"
+
+#define Clifd 0
 #define Sockfd 1
+
 using namespace std;
 
 int main(){

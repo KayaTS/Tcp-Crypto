@@ -5,7 +5,7 @@
 #include <sys/socket.h>  
 #include <unistd.h>
 #include <iostream>
-#include <openssl/aes.h>
+#include "Crypto.hpp"
 
 using namespace std;
 
@@ -17,6 +17,7 @@ class Tcp{
     AES_KEY m_enc;
     struct sockaddr_in SunucuBilgileri,MusteriBilgileri;
     socklen_t clientlength;
+    Crypto crypto;
     public:
         unsigned char plainText[50];
         Tcp(int portnumber);

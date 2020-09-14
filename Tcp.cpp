@@ -1,4 +1,13 @@
 #include "Tcp.hpp"
+
+//Encryption mods
+#define Default 0
+#define ECB 1
+#define CBC 2
+#define OFB 3
+#define CFB 4
+#define CTR 5
+
 using namespace std;
 
     Tcp::Tcp(int portnumber){
@@ -45,21 +54,19 @@ using namespace std;
         return clifd;
     }
 
-    void Tcp::sendMessage(int fd){//Mesaji gonderen server icin clifd, client icin sockfd
+    void Tcp::sendMessage(int fd){//Mesaji gonderirken server icin clifd, client icin sockfd
         unsigned char chipherText[50];
-        AES_set_encrypt_key(key, 128, &m_enc);
-        AES_encrypt(plainText, chipherText, &m_enc);
+        crypto.AesEncryption(key, 128, plainText, chipherText, ECB); // Encryption with CBC
         int mesaj_yazildi = write(fd, chipherText, sizeof(chipherText));
         cout<<"log send message lend : \n" << mesaj_yazildi  <<endl;
         if(mesaj_yazildi<0)
             cout<<"MESAJ YAZILAMADI";
     }
-    void Tcp::receiveMessage(int fd){//Mesaji alan server icin clifd, client icin sockfd
+    void Tcp::receiveMessage(int fd){//Mesaji alirken server icin clifd, client icin sockfd
         unsigned char metin[1024]="\n";
         unsigned char metin2[1024];
-        AES_set_decrypt_key(key, 128, &m_enc);
         int mesaj_okundu=read(fd,metin,1024);
-        AES_decrypt(metin, metin2, &m_enc);  
+        crypto.AesDecryption(key, 128, metin, metin2, ECB);// Encryption with CBC
         if(mesaj_okundu<0)
             cout<<"MESAJ OKUNAMADI";
         cout<<"Gelen Metin:"<< endl << metin2<< endl;
