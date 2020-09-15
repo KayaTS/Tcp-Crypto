@@ -13,8 +13,7 @@ class Crypto{
     BF_KEY m_BfKey;
     unsigned char iv[8];
 public:
-    void AesEncryption(const unsigned char * UserAesKey, int keysize, const unsigned char * in,
-       unsigned char * out, int mod);
+    void AesEncryption(const unsigned char * UserAesKey, int keysize, const unsigned char * in, unsigned char * out, int mod);
     void AesDecryption(const unsigned char * UserAesKey, int keysize, const unsigned char * in, unsigned char * out, int mod);
     void ModSelection();
     void DesEncryption();
