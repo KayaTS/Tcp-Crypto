@@ -1,7 +1,8 @@
 #include "Crypto.hpp"
 using namespace std;
 
-void Crypto::AesEncryption(const unsigned char * UserAeskey, int keysize, const unsigned char * in, unsigned char * out, int mod = 0){
+void Crypto::AesEncryption(const unsigned char * UserAeskey, int keysize, const unsigned char * in, unsigned char * out, int mod = 0)
+{
     AES_set_encrypt_key(UserAeskey, keysize, &m_AesKey);    
     switch (mod)
     {
@@ -24,7 +25,8 @@ void Crypto::AesEncryption(const unsigned char * UserAeskey, int keysize, const 
     }
     
 }
-void Crypto::AesDecryption(const unsigned char * UserAesKey, int keysize, const unsigned char * in, unsigned char * out, int mod){
+void Crypto::AesDecryption(const unsigned char * UserAesKey, int keysize, const unsigned char * in, unsigned char * out, int mod)
+{
     AES_set_decrypt_key(UserAesKey, keysize, &m_AesKey);
     switch (mod)// mod selection
     {
@@ -46,16 +48,20 @@ void Crypto::AesDecryption(const unsigned char * UserAesKey, int keysize, const 
         break;
     }
 }
-void Crypto::ModSelection(){
+void Crypto::ModSelection()
+{
 
 }
-void Crypto::DesEncryption(){
+void Crypto::DesEncryption()
+{
 
 }
-void Crypto::DesDecryption(){
+void Crypto::DesDecryption()
+{
 
 }
-void Crypto::BfEncryption(const unsigned char * UserKey, int keysize, const unsigned char * in, unsigned char * out, int mod = 0){
+void Crypto::BfEncryption(const unsigned char * UserKey, int keysize, const unsigned char * in, unsigned char * out, int mod = 0)
+{
     BF_set_key(&m_BfKey, 128, UserKey);
     RAND_bytes(iv, sizeof(iv)); //ECB disindaki modlar icin IV
     switch (mod)// mod selection
@@ -73,7 +79,8 @@ void Crypto::BfEncryption(const unsigned char * UserKey, int keysize, const unsi
         break;
     }
 }
-void Crypto::BfDecryption(const unsigned char * UserKey, int keysize, const unsigned char * in, unsigned char * out, int mod = 0){
+void Crypto::BfDecryption(const unsigned char * UserKey, int keysize, const unsigned char * in, unsigned char * out, int mod = 0)
+{
     BF_set_key(&m_BfKey, 128, UserKey);
     RAND_bytes(iv, sizeof(iv)); //ECB disindaki modlar icin IV
     switch (mod)// mod selection
