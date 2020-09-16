@@ -11,10 +11,10 @@ using namespace std;
 class Crypto{
     AES_KEY m_AesKey;
     BF_KEY m_BfKey;
-    unsigned char iv[8];
+    unsigned char iv[16];
 public:
-    void AesEncryption(const unsigned char * UserAesKey, int keysize, const unsigned char * in, unsigned char * out, int mod);
-    void AesDecryption(const unsigned char * UserAesKey, int keysize, const unsigned char * in, unsigned char * out, int mod);
+    void AesEncryption(const unsigned char * UserAesKey, int keysize, const unsigned char * in, unsigned char * out, int outlen, int mod);
+    void AesDecryption(const unsigned char * UserAesKey, int keysize, const unsigned char * in, unsigned char * out, int outlen, int mod);
     void ModSelection();
     void DesEncryption();
     void DesDecryption();

@@ -46,7 +46,7 @@ int Client::GetFd(bool defination)// Server icin 1 gir, client icin 0
 void Client::sendMessage(int fd)//Mesaji gonderirken server icin clifd, client icin sockfd
 {
         unsigned char chipherText[50];
-        crypto.AesEncryption(key, 128, plainText, chipherText, ECB); // Encryption with CBC
+        crypto.AesEncryption(key, 128, plainText, chipherText, 50, ECB); // Encryption with CBC
         int mesaj_yazildi = write(fd, chipherText, sizeof(chipherText));
         cout<<"log send message lend : \n" << mesaj_yazildi  <<endl;
         if(mesaj_yazildi<0)
@@ -57,10 +57,10 @@ void Client::receiveMessage(int fd)//Mesaji alirken server icin clifd, client ic
         unsigned char metin[1024]="\n";
         unsigned char metin2[1024];
         int mesaj_okundu=read(fd,metin,1024);
-        crypto.AesDecryption(key, 128, metin, metin2, ECB);// Encryption with CBC
+        crypto.AesDecryption(key, 128, metin, metin2, 50, ECB);// Encryption with CBC
         if(mesaj_okundu<0)
             cout<<"MESAJ OKUNAMADI";
-        cout<<"Gelen Metin:"<< endl << metin2<< endl;
+        cout<<"Gelen Metin(ECB):"<< endl << metin2<< endl;
 }
 
 

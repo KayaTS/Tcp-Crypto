@@ -1,7 +1,7 @@
 #include "Crypto.hpp"
 using namespace std;
 
-void Crypto::AesEncryption(const unsigned char * UserAeskey, int keysize, const unsigned char * in, unsigned char * out, int mod = 0)
+void Crypto::AesEncryption(const unsigned char * UserAeskey, int keysize, const unsigned char * in, unsigned char * out, int outlen, int mod = 0)
 {
     AES_set_encrypt_key(UserAeskey, keysize, &m_AesKey);    
     switch (mod)
@@ -13,8 +13,8 @@ void Crypto::AesEncryption(const unsigned char * UserAeskey, int keysize, const 
         AES_ecb_encrypt(in, out, &m_AesKey, 1);
         break;
     case 2: // Cbc mod encryption
-        RAND_bytes(iv, sizeof(iv));
-        AES_cbc_encrypt(in, out, strlen((const char *)in), &m_AesKey, iv, 1);
+        RAND_bytes(iv, 16);
+        AES_cbc_encrypt(in, out, outlen, &m_AesKey, iv, 1);
         break;
     case 3: // 
         RAND_bytes(iv, sizeof(iv));
@@ -25,7 +25,7 @@ void Crypto::AesEncryption(const unsigned char * UserAeskey, int keysize, const 
     }
     
 }
-void Crypto::AesDecryption(const unsigned char * UserAesKey, int keysize, const unsigned char * in, unsigned char * out, int mod)
+void Crypto::AesDecryption(const unsigned char * UserAesKey, int keysize, const unsigned char * in, unsigned char * out, int outlen, int mod)
 {
     AES_set_decrypt_key(UserAesKey, keysize, &m_AesKey);
     switch (mod)// mod selection
@@ -37,8 +37,8 @@ void Crypto::AesDecryption(const unsigned char * UserAesKey, int keysize, const 
         AES_ecb_encrypt(in, out, &m_AesKey, 0);
         break;
     case 2: // Cbc mod decryption
-        RAND_bytes(iv, sizeof(iv));
-        AES_cbc_encrypt(in, out, 0, &m_AesKey, iv, 0);
+        RAND_bytes(iv, 16);
+        AES_cbc_encrypt(in, out, outlen, &m_AesKey, iv, 0);
         break;
     case 3: // 
         RAND_bytes(iv, sizeof(iv));

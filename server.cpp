@@ -77,7 +77,7 @@ using namespace std;
     {
         unsigned char chipherText[50];
 
-        crypto.AesEncryption(key, 128, plainText, chipherText, ECB); // Encryption with CBC
+        crypto.AesEncryption(key, 128, plainText, chipherText, 50, ECB); // Encryption with CBC
 
         int mesaj_yazildi = write(fd, chipherText, sizeof(chipherText));
         cout<<"log send message lend : \n" << mesaj_yazildi  <<endl;
@@ -93,11 +93,11 @@ using namespace std;
 
         int mesaj_okundu=read(fd,metin,1024);
 
-        crypto.AesDecryption(key, 128, metin, metin2, ECB); // Encryption with CBC
+        crypto.AesDecryption(key, 128, metin, metin2, 50, ECB); // Encryption with CBC
 
         if(mesaj_okundu<0)
             cout<<"MESAJ OKUNAMADI";
-        cout<<"Gelen Metin:"<< endl << metin2<< endl;
+        cout<<"Gelen Metin(ECB):"<< endl << metin2<< endl;
     };
 
 
