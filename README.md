@@ -5,13 +5,20 @@ TCP communication with symmetric cipher algorithms
 
 sudo apt-get install libssl-dev
 
-### Derlemek için:
+## Derlemek için:
+### g++
 ```
 - g++ server.cpp Crypto.cpp -L/usr/lib -lssl -lcrypto -o server -g
 - g++ client.cpp Crypto.cpp -L/usr/lib -lssl -lcrypto -o client -g
 ```
+### *(Veya)*
+#### CMAKE
+```
+- cmake . 
+- make
+```
 ---
-### Çalıştırmak için:
+## Çalıştırmak için:
 ```
 - ./server
 - ./client (İkinci bir terminalde)
