@@ -80,8 +80,9 @@ int main()
 {
     Server server(5000);
     server.Listen();
-    cout << "Metni Giriniz:" << endl;
-    cin >> server.plainText;
-    server.sendMessage();
+    for(;;)
+    {
     server.receiveMessage();
+	}
 }
+
