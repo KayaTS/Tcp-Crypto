@@ -6,7 +6,7 @@
 #include <sys/socket.h>  
 #include <unistd.h>
 #include <iostream>
-
+#include <time.h>
 class Client{
 
     int sockfd;
@@ -29,6 +29,7 @@ public:
     unsigned char plainText[50];
 
     Client(int portnumber);
+    void delay();
     void connection();
     void sendMessage();
     void receiveMessage();
