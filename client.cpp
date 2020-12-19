@@ -54,6 +54,15 @@ void Client::receiveMessage()//Mesaji alirken server icin clifd, client icin soc
     cout<<"Gelen Metin(ECB):"<< endl << metin2<< endl;
 }
 
+void Client :: delay()
+{	
+	
+	clock_t startTime;
+	startTime=clock();
+	while(clock() < (startTime+ 1000000))
+	{}
+
+}
 int main()
 {
 
@@ -61,9 +70,13 @@ int main()
     Client.connection();
     cout << "Metni Giriniz:" << endl;
     cin >> Client.plainText;
+	for(;;)
+	{
     Client.sendMessage();
-    Client.receiveMessage();
+    Client.delay();
+    }
     
 }
+
 
 
